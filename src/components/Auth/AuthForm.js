@@ -3,7 +3,8 @@ import { useRef, useState } from 'react';
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true); /*로딩 되어있는지 state*/
+  const [isLoading, setIsLoading] = useState(false); /*로딩중인지 state*/
 
   /*email, password input value 얻기 위해 사용될 useRef*/
   const emailInputRef = useRef();
@@ -20,9 +21,11 @@ const AuthForm = () => {
     /*email, password input 에서 입력된 값 얻기*/
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = emailInputRef.current.value;
+
+    setIsLoading(true);
     if (isLogin) {
     } else {
-      /*로그인 되어있지 않다면 가입 요청*/
+      /*가입 요청*/
       /*firebase 에 project setting 에 있는 api key entered*/
       fetch(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAbGL8iPtvZhg9a3RDzYIO--_VbQr9sy5s',
@@ -39,6 +42,7 @@ const AuthForm = () => {
           },
         },
       ).then(res => {
+        setIsLoading(false); /*요청에대한 응답 상관없이 로딩중 false*/
         if (res.ok) {
           /*요청 성공시*/
         } else {
@@ -51,7 +55,7 @@ const AuthForm = () => {
             if (data && data.error && data.error.message) {
               errorMessage = data.error.message;
             }
-            alert(errorMessage)
+            alert(errorMessage);
           });
         }
       });
@@ -71,7 +75,8 @@ const AuthForm = () => {
           <input type="password" id="password" ref={passwordInputRef} required />
         </div>
         <div className={classes.actions}>
-          <button>{isLogin ? 'Login' : 'Create Account'}</button>
+          {!isLoading && <button>{isLogin ? 'Login' : 'Create Account'}</button>} {/*로딩 중이 아닐때 Login or Create Account 표현*/}
+          {isLoading && <p>요청 전송 중...</p>}{/*로딩 중일때 메시지 출력*/}
           <button type="button" className={classes.toggle} onClick={switchAuthModeHandler}>
             {isLogin ? 'Create new account' : 'Login with existing account'}
           </button>
