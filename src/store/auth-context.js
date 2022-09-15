@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 const AuthContext = React.createContext({
-  token: '' /*token 저장소 초기값*/,
-  isLoggedIn: false /*로그인 됐을때 state(기본적으로 로그인 상태가 아니기때문에 false)*/,
+  token: '',/*token 저장소 초기값*/
+  isLoggedIn: false,/*로그인 됐을때 state(기본적으로 로그인 상태가 아니기때문에 false)*/
   login: token => {},
   logout: () => {},
 });

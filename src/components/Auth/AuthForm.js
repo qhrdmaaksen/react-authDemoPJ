@@ -1,16 +1,17 @@
 import { useContext,useRef, useState } from 'react';
 import classes from './AuthForm.module.css';
 import AuthContext from "../../store/auth-context";
+import {useHistory} from 'react-router-dom'
 
 const AuthForm = () => {
-  const [isLogin, setIsLogin] = useState(true); /*로딩 되어있는지 state*/
-  const [isLoading, setIsLoading] = useState(false); /*로딩중인지 state*/
-
-  const authCtx = useContext(AuthContext)
-
   /*email, password input value 얻기 위해 사용될 useRef*/
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const authCtx = useContext(AuthContext)
+  const [isLogin, setIsLogin] = useState(true); /*로딩 되어있는지 state*/
+  const [isLoading, setIsLoading] = useState(false); /*로딩중인지 state*/
+  const history = useHistory()
+
 
   const switchAuthModeHandler = () => {
     setIsLogin(prevState => !prevState);
@@ -22,7 +23,7 @@ const AuthForm = () => {
 
     /*email, password input 에서 입력된 값 얻기*/
     const enteredEmail = emailInputRef.current.value;
-    const enteredPassword = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
 
     setIsLoading(true);
     let url; /*가입과 로그인이 로직이 url 을 제외하고 같기때문에 변수 url 에 조건에따라 url 만 변경되도록함*/
@@ -70,6 +71,7 @@ const AuthForm = () => {
         console.log(data)
         /*firebase 에서 받은 idToken setting*/
         authCtx.login(data.idToken)
+        history.replace('/') /*시작페이지로보내며 사용자가 뒤로 가기를 눌러 이전 페이지에 못가게함*/
       })
       .catch(err => {
         alert(err.message);

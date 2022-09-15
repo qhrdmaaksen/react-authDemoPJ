@@ -1,11 +1,13 @@
 import { useRef, useState, useContext } from 'react';
 import AuthContext from '../../store/auth-context';
 import classes from './ProfileForm.module.css';
+import {useHistory} from 'react-router-dom'
 
 const ProfileForm = () => {
   const newPasswordInputRef = useRef(); /*새로운 비밀번호 입력을 위한 ref*/
   const authCtx = useContext(AuthContext); /*token 을 받기위해 context 접근*/
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory()
 
   const submitHandler = event => {
     event.preventDefault(); /*브라우저 기본값 요청 방지*/
@@ -43,6 +45,7 @@ const ProfileForm = () => {
       }
     }).then(data => {
       console.log(data)
+      history.replace('/')
     }).catch(error => {
       alert(error.message)
     })
