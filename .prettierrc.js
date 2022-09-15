@@ -17,13 +17,14 @@ module.exports =  {
 	//객체 리터럴 사용시 괄호에 공백 삽입 여부 (default: true)
 	"bracketSpacing": true,
 	// JSX 의 마지막 `>`를 다음 줄로 내릴지 여부
-	"jsxBracketSameLine": true,
+	"jsxBracketSameLine": false,
 	//단독 화살표 함수의 매개 변수 주위에 괄호를 자동으로 붙힘 (default: 'avoid')
-	"arrowParens": "avoid",
+	"arrowParens": "always",
 	//vue 파일의 script와 style태그 들여쓰기 여부
 	"vueIndentScriptAndStyle": false,
 	//맨마지막 줄 넣는지 여부
 	"endOfLine": "auto",
+
 
 	// .gitignore 처럼 prettier 이 적용되지 않게 하려면 .prettierignore 에 파일명을 기록하면 그 파일은 무시
 	// 또한 파일 뿐만 아니고 코드내에서 주석으로 // prettier-ignore 라고 작성하면 해당 코드만 무시
