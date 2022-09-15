@@ -1,10 +1,12 @@
-import { useRef, useState } from 'react';
-
+import { useContext,useRef, useState } from 'react';
 import classes from './AuthForm.module.css';
+import AuthContext from "../../store/auth-context";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true); /*로딩 되어있는지 state*/
   const [isLoading, setIsLoading] = useState(false); /*로딩중인지 state*/
+
+  const authCtx = useContext(AuthContext)
 
   /*email, password input value 얻기 위해 사용될 useRef*/
   const emailInputRef = useRef();
@@ -66,6 +68,8 @@ const AuthForm = () => {
       })
       .then(data => {
         console.log(data)
+        /*firebase 에서 받은 idToken setting*/
+        authCtx.login(data.idToken)
       })
       .catch(err => {
         alert(err.message);
