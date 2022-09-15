@@ -8,15 +8,18 @@ const AuthContext = React.createContext({
 
 /*인증 관련 상태를 관리하는 컴포넌트*/
 export const AuthContextProvider = props => {
-  const [token, setToken] = useState(null); /*토큰을 보고 사용자의 로그인 여부를 유추할 state*/
+  const initialToken = localStorage.getItem('token')/*토큰 상태 초기화*/
+  const [token, setToken] = useState(initialToken); /*토큰을 보고 사용자의 로그인 여부를 유추할 state*/
 
   const userIsLoggedIn = !!token; /*!! 은 참 또는 거짓 값을 boolean 으로 바꿔줌*/
 
   const loginHandler = token => {
     setToken(token);
+    localStorage.setItem('token', token)  /*token 로컬 저장소에 저장(key,value 같아야함)*/
   };
   const logoutHandler = () => {
     setToken(null); /*logout 하면 token 없앰*/
+    localStorage.removeItem('token') /*로컬 저장소에서 토큰 삭제*/
   };
 
   const contextValue = {
