@@ -7,6 +7,11 @@ const MainNavigation = () => {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn; /*loggedIn state*/
 
+  const logoutHandler = () => {
+    /*컨텍스트에 logout handler 에서 setToken(null) 지정하였기에 토큰이 없으니 로그아웃됨*/
+    authCtx.logout()
+  }
+
   return (
     <header className={classes.header}>
       <Link to="/">
@@ -26,7 +31,7 @@ const MainNavigation = () => {
           )}
           {isLoggedIn && (
             <li>
-              <button>Logout</button>
+              <button onClick={logoutHandler}>Logout</button>
             </li>
           )}
         </ul>
